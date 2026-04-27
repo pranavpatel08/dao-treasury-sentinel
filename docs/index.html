@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAO Treasury Sentinel — Pitch Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #060912;
+  --surface:    #0b0f1e;
+  --surface2:   #0f1628;
+  --gold:       #F59E0B;
+  --gold-glow:  rgba(245,158,11,0.15);
+  --gold-dim:   rgba(245,158,11,0.55);
+  --gold-line:  rgba(245,158,11,0.22);
+  --red:        #EF4444;
+  --red-glow:   rgba(239,68,68,0.15);
+  --amber-warn: #F97316;
+  --green:      #22C55E;
+  --text:       #DDE3EE;
+  --text-mid:   #8B96AC;
+  --text-dim:   #4A5568;
+  --mono:       'JetBrains Mono', 'Courier New', monospace;
+  --display:    'Bebas Neue', var(--mono);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: var(--mono);
+  color: var(--text);
+}
+
+/* ── Grid background ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(var(--gold-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--gold-line) 1px, transparent 1px);
+  background-size: 52px 52px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(245,158,11,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Slide shell ── */
+#deck {
+  position: relative; z-index: 1;
+  width: 100vw; height: 100vh;
+}
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 60px 80px;
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity 0.45s cubic-bezier(.4,0,.2,1), transform 0.45s cubic-bezier(.4,0,.2,1);
+  pointer-events: none;
+}
+.slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: all;
+}
+.slide.exit-left {
+  opacity: 0;
+  transform: translateX(-60px);
+}
+
+/* ── Progress bar ── */
+#progress {
+  position: fixed; bottom: 0; left: 0;
+  height: 2px;
+  background: var(--gold);
+  transition: width 0.4s cubic-bezier(.4,0,.2,1);
+  box-shadow: 0 0 12px var(--gold);
+  z-index: 100;
+}
+
+/* ── Slide counter ── */
+#counter {
+  position: fixed; bottom: 18px; right: 28px;
+  font-size: 10px; letter-spacing: 0.18em;
+  color: var(--text-dim);
+  z-index: 100;
+}
+
+/* ── Nav dots ── */
+#dots {
+  position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px; z-index: 100;
+}
+.dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.dot.active {
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+}
+
+/* ── Nav arrows ── */
+.nav-arrow {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  background: none; border: 1px solid var(--gold-line);
+  color: var(--text-dim); cursor: pointer;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; z-index: 100;
+  transition: all 0.2s;
+}
+.nav-arrow:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-glow); }
+#prev-btn { left: 20px; }
+#next-btn { right: 20px; }
+
+/* ── Corner label ── */
+.corner-label {
+  position: absolute; top: 28px; left: 44px;
+  font-size: 9px; letter-spacing: 0.25em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+.corner-label span { color: var(--gold); }
+
+/* ══════════════════════════════════════════
+   SLIDE 1 — HERO
+══════════════════════════════════════════ */
+#s1 { justify-content: center; align-items: flex-start; }
+
+.s1-eyebrow {
+  font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.s1-eyebrow::before {
+  content: '';
+  display: block; width: 32px; height: 1px;
+  background: var(--gold);
+}
+
+.s1-title {
+  font-family: var(--display);
+  font-size: clamp(72px, 9vw, 128px);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-shadow: 0 0 80px rgba(245,158,11,0.25);
+  margin-bottom: 32px;
+}
+.s1-title .gold { color: var(--gold); }
+
+.s1-tagline {
+  font-size: 15px; font-weight: 300;
+  color: var(--text-mid);
+  max-width: 560px;
+  line-height: 1.7;
+  border-left: 2px solid var(--gold);
+  padding-left: 20px;
+  margin-bottom: 56px;
+}
+
+.s1-badges {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.badge {
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  border: 1px solid var(--gold-line);
+  color: var(--text-mid);
+  padding: 6px 14px;
+}
+.badge.hot { border-color: var(--gold); color: var(--gold); }
+
+.s1-right {
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+  text-align: right;
+}
+.terminal-mini {
+  background: var(--surface); border: 1px solid var(--gold-line);
+  padding: 20px 24px;
+  font-size: 11px; line-height: 1.8;
+  min-width: 340px;
+}
+.terminal-mini .prompt { color: var(--gold); }
+.terminal-mini .cmd { color: #fff; }
+.terminal-mini .out { color: var(--text-mid); }
+.terminal-mini .crit { color: var(--red); }
+.terminal-mini .warn { color: var(--amber-warn); }
+.terminal-mini .ok { color: var(--green); }
+.terminal-bar {
+  background: var(--surface2); border-bottom: 1px solid var(--gold-line);
+  padding: 8px 14px; margin: -20px -24px 16px;
+  display: flex; align-items: center; gap: 6px;
+}
+.tbar-dot { width: 8px; height: 8px; border-radius: 50%; }
+.tbar-title { font-size: 9px; letter-spacing: 0.15em; color: var(--text-dim); margin-left: auto; }
+
+/* ══════════════════════════════════════════
+   SLIDE 2 — THE PROBLEM (stats)
+══════════════════════════════════════════ */
+.slide-headline {
+  font-family: var(--display);
+  font-size: clamp(36px, 5vw, 64px);
+  letter-spacing: 0.04em;
+  text-align: center;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+.slide-sub {
+  font-size: 12px; color: var(--text-mid);
+  text-align: center; margin-bottom: 56px;
+  letter-spacing: 0.1em;
+}
+
+.stat-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  width: 100%; max-width: 900px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--gold-line);
+  padding: 36px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+.stat-num {
+  font-family: var(--display);
+  font-size: clamp(44px, 5vw, 72px);
+  color: var(--gold);
+  text-shadow: 0 0 40px rgba(245,158,11,0.4);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.stat-label {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-mid); margin-bottom: 8px;
+}
+.stat-desc { font-size: 11px; color: var(--text-dim); line-height: 1.6; }
+
+/* ══════════════════════════════════════════
+   SLIDE 3 — PAIN POINTS
+══════════════════════════════════════════ */
+.pain-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  width: 100%; max-width: 1000px;
+}
+.pain-card {
+  border: 1px solid var(--gold-line);
+  padding: 32px 28px;
+  position: relative;
+  background: var(--surface);
+}
+.pain-icon {
+  font-size: 28px; margin-bottom: 20px; display: block;
+}
+.pain-title {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 14px;
+}
+.pain-body {
+  font-size: 12px; color: var(--text-mid); line-height: 1.75;
+}
+.pain-quote {
+  margin-top: 16px; padding-top: 16px;
+  border-top: 1px solid var(--gold-line);
+  font-size: 10px; color: var(--text-dim); font-style: italic;
+}
+
+/* ══════════════════════════════════════════
+   SLIDE 4 — SOLUTION
+══════════════════════════════════════════ */
+.solution-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+  width: 100%; max-width: 1000px;
+  align-items: start;
+}
+.solution-left {}
+.solution-left .slide-headline { text-align: left; }
+.solution-left .slide-sub { text-align: left; }
+
+.feature-list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 14px;
+  margin-top: 8px;
+}
+.feature-list li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 12px; color: var(--text-mid); line-height: 1.5;
+}
+.feature-list li::before {
+  content: '→';
+  color: var(--gold); flex-shrink: 0; margin-top: 1px;
+}
+
+.cmd-block {
+  background: var(--surface); border: 1px solid var(--gold-line);
+  padding: 0;
+  font-size: 12px;
+}
+.cmd-bar {
+  background: var(--surface2); border-bottom: 1px solid var(--gold-line);
+  padding: 10px 16px;
+  font-size: 9px; letter-spacing: 0.2em; color: var(--text-dim);
+  display: flex; justify-content: space-between;
+}
+.cmd-lines { padding: 20px 20px; display: flex; flex-direction: column; gap: 10px; }
+.cmd-line { display: flex; gap: 10px; }
+.cmd-line .p { color: var(--gold-dim); flex-shrink: 0; }
+.cmd-line .c { color: #fff; }
+.cmd-line .a { color: var(--text-mid); }
+.cmd-line .f { color: var(--green); }
+.cmd-divider { border: none; border-top: 1px solid var(--gold-line); margin: 4px 0; }
+
+/* ══════════════════════════════════════════
+   SLIDE 5 — LIVE OUTPUT
+══════════════════════════════════════════ */
+.live-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  width: 100%; max-width: 1040px; align-items: start;
+}
+.live-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 24px;
+}
+.live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 8px var(--red);
+  animation: pulse-red 1.5s ease-in-out infinite;
+}
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.live-label {
+  font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim);
+}
+
+.terminal-full {
+  background: var(--surface); border: 1px solid var(--gold-line);
+  font-size: 11px; line-height: 1.8;
+}
+.terminal-full .tbar { background: var(--surface2); border-bottom: 1px solid var(--gold-line); padding: 10px 16px; }
+.terminal-full .tbody { padding: 18px 20px; }
+.t-prompt { color: var(--gold); }
+.t-addr { color: var(--text-mid); font-size: 10px; }
+.t-sep { color: var(--text-dim); }
+.t-row { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.04); padding: 3px 0; }
+.t-key { color: var(--text-mid); }
+.t-val { color: #fff; font-weight: 600; }
+.t-val.gold { color: var(--gold); }
+.t-val.red { color: var(--red); }
+.t-val.grn { color: var(--green); }
+
+.risk-panel {
+  display: flex; flex-direction: column; gap: 14px;
+}
+.risk-item {
+  border: 1px solid;
+  padding: 16px 18px;
+}
+.risk-item.crit { border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.05); }
+.risk-item.warn { border-color: rgba(249,115,22,0.4); background: rgba(249,115,22,0.05); }
+.risk-badge {
+  font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 3px 8px; margin-bottom: 8px; display: inline-block;
+}
+.risk-item.crit .risk-badge { background: rgba(239,68,68,0.2); color: var(--red); }
+.risk-item.warn .risk-badge { background: rgba(249,115,22,0.2); color: var(--amber-warn); }
+.risk-code { font-size: 10px; color: var(--text-mid); margin-bottom: 4px; }
+.risk-desc { font-size: 12px; color: #fff; margin-bottom: 4px; }
+.risk-ev { font-size: 10px; color: var(--text-dim); }
+
+/* ══════════════════════════════════════════
+   SLIDE 6 — ARCHITECTURE
+══════════════════════════════════════════ */
+.arch-wrap {
+  width: 100%; max-width: 860px;
+}
+.arch-diagram {
+  display: flex; align-items: stretch; gap: 0;
+  border: 1px solid var(--gold-line);
+  background: var(--surface);
+  overflow: hidden;
+}
+.arch-col {
+  flex: 1; padding: 28px 24px;
+  border-right: 1px solid var(--gold-line);
+  position: relative;
+}
+.arch-col:last-child { border-right: none; }
+.arch-col-title {
+  font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 20px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--gold-line);
+}
+.arch-item {
+  font-size: 11px; color: var(--text-mid); line-height: 1.6;
+  padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex; align-items: center; gap: 8px;
+}
+.arch-item:last-child { border-bottom: none; }
+.arch-icon { color: var(--gold-dim); font-size: 12px; }
+.arch-arrow {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; flex-shrink: 0;
+  background: var(--surface2); font-size: 18px; color: var(--gold-dim);
+}
+
+.arch-sources {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-top: 28px;
+}
+.source-card {
+  border: 1px solid var(--gold-line); background: var(--surface);
+  padding: 20px 18px;
+}
+.source-name {
+  font-size: 11px; color: var(--gold); margin-bottom: 8px;
+  font-weight: 600; letter-spacing: 0.1em;
+}
+.source-what { font-size: 10px; color: var(--text-dim); line-height: 1.6; }
+.source-tag {
+  display: inline-block; margin-top: 10px;
+  font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 2px 8px; border: 1px solid rgba(34,197,94,0.3);
+  color: var(--green);
+}
+
+/* ══════════════════════════════════════════
+   SLIDE 7 — RISK ENGINE
+══════════════════════════════════════════ */
+.risk-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+  width: 100%; max-width: 1060px;
+}
+.risk-full-card {
+  border: 1px solid;
+  padding: 20px 16px;
+  position: relative; overflow: hidden;
+}
+.risk-full-card.crit {
+  border-color: rgba(239,68,68,0.35);
+  background: linear-gradient(135deg, rgba(239,68,68,0.06) 0%, var(--surface) 60%);
+}
+.risk-full-card.warn {
+  border-color: rgba(249,115,22,0.3);
+  background: linear-gradient(135deg, rgba(249,115,22,0.05) 0%, var(--surface) 60%);
+}
+.risk-full-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.risk-full-card.crit::before { background: var(--red); box-shadow: 0 0 8px var(--red); }
+.risk-full-card.warn::before { background: var(--amber-warn); }
+
+.rfc-level {
+  font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 12px; display: inline-block; padding: 2px 8px;
+}
+.crit .rfc-level { background: rgba(239,68,68,0.15); color: var(--red); }
+.warn .rfc-level { background: rgba(249,115,22,0.15); color: var(--amber-warn); }
+.rfc-code { font-size: 9px; color: var(--text-dim); margin-bottom: 10px; font-weight: 500; }
+.rfc-desc { font-size: 11px; color: var(--text); line-height: 1.5; margin-bottom: 10px; }
+.rfc-trigger { font-size: 9px; color: var(--text-dim); line-height: 1.5; }
+
+/* ══════════════════════════════════════════
+   SLIDE 8 — PUBLIC GOODS
+══════════════════════════════════════════ */
+.goods-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+  width: 100%; max-width: 1000px; align-items: center;
+}
+.goods-left .slide-headline { text-align: left; }
+.goods-left .slide-sub { text-align: left; margin-bottom: 28px; }
+
+.goods-para {
+  font-size: 12px; color: var(--text-mid); line-height: 1.9;
+  border-left: 2px solid var(--gold);
+  padding-left: 16px; margin-bottom: 20px;
+}
+
+.goods-pills {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.pill {
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+  border: 1px solid var(--gold-line); color: var(--text-mid);
+  padding: 5px 12px;
+}
+.pill.lit { border-color: var(--gold); color: var(--gold); }
+
+.goods-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.good-card {
+  background: var(--surface); border: 1px solid var(--gold-line);
+  padding: 22px 20px;
+}
+.good-num {
+  font-family: var(--display);
+  font-size: 40px; color: var(--gold);
+  text-shadow: 0 0 30px rgba(245,158,11,0.35);
+  line-height: 1; margin-bottom: 6px;
+}
+.good-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-mid); margin-bottom: 4px; }
+.good-desc { font-size: 10px; color: var(--text-dim); line-height: 1.5; }
+
+/* ══════════════════════════════════════════
+   SLIDE 9 — GET STARTED
+══════════════════════════════════════════ */
+#s9 { justify-content: center; align-items: flex-start; }
+.s9-left { max-width: 520px; }
+.s9-eyebrow {
+  font-size: 9px; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 16px;
+  text-transform: uppercase;
+}
+.s9-title {
+  font-family: var(--display);
+  font-size: clamp(48px, 6vw, 82px);
+  line-height: 0.95; letter-spacing: 0.03em;
+  color: #fff;
+  margin-bottom: 24px;
+}
+.s9-sub { font-size: 12px; color: var(--text-mid); line-height: 1.7; margin-bottom: 32px; }
+.s9-link {
+  display: inline-block;
+  border: 1px solid var(--gold);
+  color: var(--gold); background: var(--gold-glow);
+  padding: 12px 24px;
+  font-size: 11px; letter-spacing: 0.2em; text-decoration: none;
+  transition: all 0.2s;
+}
+.s9-link:hover { background: rgba(245,158,11,0.25); }
+
+.s9-right {
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+  min-width: 380px;
+}
+.setup-block {
+  background: var(--surface); border: 1px solid var(--gold-line);
+}
+.setup-bar {
+  background: var(--surface2); border-bottom: 1px solid var(--gold-line);
+  padding: 10px 16px; font-size: 9px; letter-spacing: 0.2em; color: var(--text-dim);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.setup-bar span { color: var(--green); }
+.setup-lines { padding: 20px 20px; display: flex; flex-direction: column; gap: 8px; }
+.setup-line { display: flex; gap: 10px; font-size: 11px; line-height: 1.6; }
+.setup-line .p { color: var(--gold-dim); flex-shrink: 0; }
+.setup-line .c { color: #fff; }
+.setup-line .cm { color: var(--text-dim); }
+.setup-sep { border: none; border-top: 1px solid var(--gold-line); margin: 6px 0; }
+.setup-out { font-size: 10px; }
+.setup-out .metric { color: var(--text-mid); }
+.setup-out .value { color: var(--gold); font-weight: 600; }
+
+.s9-meta {
+  margin-top: 28px; display: flex; flex-direction: column; gap: 6px;
+}
+.meta-row { font-size: 10px; display: flex; gap: 10px; }
+.meta-row .lbl { color: var(--text-dim); min-width: 80px; }
+.meta-row .val { color: var(--text-mid); }
+.meta-row .val a { color: var(--gold); text-decoration: none; }
+
+/* ══════════════════════════════════════════
+   CURSOR BLINK
+══════════════════════════════════════════ */
+.cursor {
+  display: inline-block; width: 8px; height: 14px;
+  background: var(--gold);
+  margin-left: 4px; vertical-align: middle;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ══════════════════════════════════════════
+   KEYBOARD HINT
+══════════════════════════════════════════ */
+#hint {
+  position: fixed; bottom: 18px; left: 44px;
+  font-size: 9px; letter-spacing: 0.15em; color: var(--text-dim);
+  z-index: 100;
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="counter"></div>
+<div id="dots"></div>
+<button class="nav-arrow" id="prev-btn" aria-label="Previous">‹</button>
+<button class="nav-arrow" id="next-btn" aria-label="Next">›</button>
+<div id="hint">← → NAVIGATE</div>
+
+<div id="deck">
+
+<!-- ═══════════════════════════════════════
+     SLIDE 1 — HERO
+════════════════════════════════════════ -->
+<section class="slide active" id="s1">
+  <div class="corner-label">DAO TREASURY SENTINEL <span>·</span> BETA 2026</div>
+
+  <div>
+    <div class="s1-eyebrow">Agentic Public Goods · Allocation Track</div>
+    <div class="s1-title">DAO<br><span class="gold">TREASURY</span><br>SENTINEL</div>
+    <div class="s1-tagline">
+      Always-on treasury analyst for any DAO.<br>
+      One command. Live on-chain data. Completely free.
+    </div>
+    <div class="s1-badges">
+      <span class="badge hot">MIT Licensed</span>
+      <span class="badge">OpenClaw Skill</span>
+      <span class="badge">Ethereum Mainnet</span>
+      <span class="badge">45 Tests · CI/CD</span>
+    </div>
+  </div>
+
+  <div class="s1-right">
+    <div class="terminal-mini">
+      <div class="terminal-bar">
+        <div class="tbar-dot" style="background:#EF4444"></div>
+        <div class="tbar-dot" style="background:#F59E0B"></div>
+        <div class="tbar-dot" style="background:#22C55E"></div>
+        <span class="tbar-title">sentinel · live</span>
+      </div>
+      <div class="prompt">$ sentinel snapshot 0xFe89cc7a... --native ENS</div>
+      <br>
+      <div class="out">  Total AUM            <span style="color:#fff;font-weight:600">$76,381,675</span></div>
+      <div class="out">  Stable Ratio         <span style="color:#fff">6.8%</span></div>
+      <div class="out">  Native Concentration <span style="color:#F59E0B;font-weight:700">79.2%</span></div>
+      <br>
+      <div class="crit">  ■ CRITICAL  R001_NATIVE_CONCENTRATION</div>
+      <div class="out" style="font-size:10px">  ENS is 79% of $76M treasury</div>
+      <br>
+      <div class="warn">  ▲ WARN  R005_STABLE_ISSUER_CONCENTRATION</div>
+      <div class="out" style="font-size:10px">  USDC is 100% of stablecoins<span class="cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 2 — THE GAP
+════════════════════════════════════════ -->
+<section class="slide" id="s2">
+  <div class="corner-label">THE PROBLEM</div>
+  <div class="slide-headline">DAOs Hold $32B.<br>Most Fly Blind.</div>
+  <div class="slide-sub">THE TREASURY INTELLIGENCE GAP</div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-num">$32B+</div>
+      <div class="stat-label">DAO Treasuries On-Chain</div>
+      <div class="stat-desc">Across 4,000+ active DAOs. Ethereum, Optimism, Arbitrum, and beyond.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">80%</div>
+      <div class="stat-label">Concentrated in Native Token</div>
+      <div class="stat-desc">When the governance token drops 50%, the treasury and operating runway both collapse. Simultaneously.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">$2.5M</div>
+      <div class="stat-label">Per Year for Alternatives</div>
+      <div class="stat-desc">Karpatkey, Llama, and Steakhouse charge $322K–$2.5M/yr. Below that tier, DAOs use spreadsheets.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 3 — THREE FAILURE MODES
+════════════════════════════════════════ -->
+<section class="slide" id="s3">
+  <div class="corner-label">THE PAIN</div>
+  <div class="slide-headline">Three Failure Modes</div>
+  <div class="slide-sub">REAL INCIDENTS. REAL LOSSES.</div>
+
+  <div class="pain-grid">
+    <div class="pain-card">
+      <span class="pain-icon">⚡</span>
+      <div class="pain-title">Concentration Collapse</div>
+      <div class="pain-body">
+        When a DAO's treasury is 80% native token, a 50% price drop doesn't just hurt — it halves the operating budget and the ability to respond at the same moment.
+      </div>
+      <div class="pain-quote">"No dashboard showed us the cliff before we were already falling."</div>
+    </div>
+    <div class="pain-card">
+      <span class="pain-icon">🔴</span>
+      <div class="pain-title">Depeg Blindness</div>
+      <div class="pain-body">
+        ENS DAO held USDC through the March 2023 Silicon Valley Bank depeg. Governance moves in days; depegs move in hours. Manual monitoring doesn't scale.
+      </div>
+      <div class="pain-quote">"By the time the proposal passed, the peg was back — but the damage was done."</div>
+    </div>
+    <div class="pain-card">
+      <span class="pain-icon">🚫</span>
+      <div class="pain-title">Sanctions Blind Spots</div>
+      <div class="pain-body">
+        Grant programs receive funds from thousands of addresses. No tooling exists to flag OFAC-listed counterparties in real time — leaving DAOs exposed to compliance risk.
+      </div>
+      <div class="pain-quote">"We had no idea we'd received funds from a sanctioned wallet."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 4 — THE SOLUTION
+════════════════════════════════════════ -->
+<section class="slide" id="s4">
+  <div class="corner-label">THE SOLUTION</div>
+  <div class="solution-layout">
+    <div class="solution-left">
+      <div class="slide-headline" style="text-align:left">One Command.<br>Full Picture.</div>
+      <div class="slide-sub" style="text-align:left;margin-bottom:28px">AN OPENCLAW SKILL FOR ANY DAO</div>
+      <ul class="feature-list">
+        <li>Live holdings from Alchemy — token balances + metadata</li>
+        <li>USD pricing from DefiLlama's free coins API</li>
+        <li>OFAC screening via Chainalysis on-chain oracle (no account needed)</li>
+        <li>5 risk flags with evidence + remediation guidance</li>
+        <li>JSON output for downstream agents and dashboards</li>
+        <li>Works with any Safe multisig or EOA on Ethereum</li>
+      </ul>
+    </div>
+    <div>
+      <div class="cmd-block">
+        <div class="cmd-bar">
+          <span>TERMINAL</span>
+          <span style="color:var(--green)">● LIVE</span>
+        </div>
+        <div class="cmd-lines">
+          <div class="cmd-line">
+            <span class="p">$</span>
+            <span class="c">sentinel <span class="a">snapshot</span> <span class="f">0xFe89cc7a...</span> --native ENS</span>
+          </div>
+          <hr class="cmd-divider">
+          <div class="cmd-line">
+            <span class="p">$</span>
+            <span class="c">sentinel <span class="a">risks</span>&nbsp;&nbsp;&nbsp; <span class="f">0xFe89cc7a...</span></span>
+          </div>
+          <hr class="cmd-divider">
+          <div class="cmd-line">
+            <span class="p">$</span>
+            <span class="c">sentinel <span class="a">flows</span>&nbsp;&nbsp;&nbsp; <span class="f">0xFe89cc7a...</span> --since 30d</span>
+          </div>
+          <hr class="cmd-divider">
+          <div class="cmd-line">
+            <span class="p">$</span>
+            <span class="c">sentinel <span class="a">snapshot</span> <span class="f">0xFe89cc7a...</span> --json</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="background:var(--surface);border:1px solid var(--gold-line);padding:14px 16px">
+          <div style="font-size:9px;letter-spacing:.2em;color:var(--gold);margin-bottom:6px">INSTALL</div>
+          <div style="font-size:10px;color:var(--text-dim)">uv sync → one env var → run</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--gold-line);padding:14px 16px">
+          <div style="font-size:9px;letter-spacing:.2em;color:var(--gold);margin-bottom:6px">REQUIRES</div>
+          <div style="font-size:10px;color:var(--text-dim)">ALCHEMY_API_KEY (free tier)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 5 — LIVE OUTPUT
+════════════════════════════════════════ -->
+<section class="slide" id="s5">
+  <div class="corner-label">LIVE DEMO</div>
+  <div class="live-header">
+    <div class="live-dot"></div>
+    <div class="live-label">ENS DAO · 0xFe89cc7aBB2C4183683ab71653C4cdc9B02D44b7 · April 2026</div>
+  </div>
+
+  <div class="live-layout">
+    <div class="terminal-full">
+      <div class="tbar" style="background:var(--surface2);border-bottom:1px solid var(--gold-line);padding:10px 16px;font-size:9px;letter-spacing:.2em;color:var(--text-dim);display:flex;justify-content:space-between">
+        <span>sentinel snapshot</span><span style="color:var(--green)">LIVE DATA</span>
+      </div>
+      <div class="tbody">
+        <div style="margin-bottom:14px">
+          <span class="t-prompt">$</span>
+          <span class="t-addr"> sentinel snapshot 0xFe89cc7a... --native ENS</span>
+        </div>
+        <div class="t-row"><span class="t-key">Total AUM</span><span class="t-val gold">$76,381,675</span></div>
+        <div class="t-row"><span class="t-key">Stable Ratio</span><span class="t-val">6.8%</span></div>
+        <div class="t-row"><span class="t-key">Native Concentration</span><span class="t-val red">79.2%</span></div>
+        <div class="t-row"><span class="t-key">ETH Holdings</span><span class="t-val">14.3%</span></div>
+        <div class="t-row"><span class="t-key">Runway</span><span class="t-val" style="color:var(--text-dim)">N/A (no recent burn)</span></div>
+        <div style="margin-top:14px;margin-bottom:6px;font-size:9px;letter-spacing:.2em;color:var(--text-dim)">TOP HOLDINGS</div>
+        <div class="t-row"><span class="t-key">ENS</span><span class="t-val">~30M tokens · $60.5M</span></div>
+        <div class="t-row"><span class="t-key">ETH</span><span class="t-val">~2,800 ETH · $10.9M</span></div>
+        <div class="t-row"><span class="t-key">USDC</span><span class="t-val">$5.2M</span></div>
+      </div>
+    </div>
+
+    <div class="risk-panel">
+      <div style="font-size:9px;letter-spacing:.2em;color:var(--text-dim);margin-bottom:4px">RISK FLAGS FIRED</div>
+      <div class="risk-item crit">
+        <div class="risk-badge">CRITICAL</div>
+        <div class="risk-code">R001_NATIVE_CONCENTRATION</div>
+        <div class="risk-desc">ENS represents 79% of treasury</div>
+        <div class="risk-ev">$76.4M AUM · 79% in governance token<br>→ Diversify into stablecoins or ETH</div>
+      </div>
+      <div class="risk-item warn">
+        <div class="risk-badge">WARN</div>
+        <div class="risk-code">R005_STABLE_ISSUER_CONCENTRATION</div>
+        <div class="risk-desc">USDC is 100% of stablecoin holdings</div>
+        <div class="risk-ev">$5.2M of $5.2M stablecoins in USDC only<br>→ Diversify across issuers (USDC + DAI + USDT)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 6 — ARCHITECTURE
+════════════════════════════════════════ -->
+<section class="slide" id="s6">
+  <div class="corner-label">ARCHITECTURE</div>
+  <div class="slide-headline">Three Free Sources.<br>One Truth.</div>
+  <div class="slide-sub" style="margin-bottom:36px">ALL DATA SOURCES FREE · NO PAID TIER REQUIRED</div>
+
+  <div class="arch-wrap">
+    <div class="arch-diagram">
+      <div class="arch-col">
+        <div class="arch-col-title">Ingest</div>
+        <div class="arch-item"><span class="arch-icon">◆</span> alchemy_getTokenBalances</div>
+        <div class="arch-item"><span class="arch-icon">◆</span> alchemy_getTokenMetadata</div>
+        <div class="arch-item"><span class="arch-icon">◆</span> alchemy_getAssetTransfers</div>
+        <div class="arch-item"><span class="arch-icon">◆</span> eth_call (Chainalysis oracle)</div>
+        <div class="arch-item"><span class="arch-icon">◆</span> DefiLlama /prices/current</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-col">
+        <div class="arch-col-title">Normalize</div>
+        <div class="arch-item"><span class="arch-icon">▸</span> TokenBalance models</div>
+        <div class="arch-item"><span class="arch-icon">▸</span> Holdings + total_usd</div>
+        <div class="arch-item"><span class="arch-icon">▸</span> Flow direction tagging</div>
+        <div class="arch-item"><span class="arch-icon">▸</span> Sanctions bool map</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-col">
+        <div class="arch-col-title">Analyze</div>
+        <div class="arch-item"><span class="arch-icon">▸</span> 7 metric functions</div>
+        <div class="arch-item"><span class="arch-icon">▸</span> 5 risk flag rules</div>
+        <div class="arch-item"><span class="arch-icon">▸</span> Runway computation</div>
+        <div class="arch-item"><span class="arch-icon">▸</span> OFAC counterparty screen</div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-col">
+        <div class="arch-col-title">Render</div>
+        <div class="arch-item"><span class="arch-icon">▸</span> Rich terminal table</div>
+        <div class="arch-item"><span class="arch-icon">▸</span> Markdown report</div>
+        <div class="arch-item"><span class="arch-icon">▸</span> JSON sidecar</div>
+        <div class="arch-item"><span class="arch-icon">▸</span> OpenClaw output</div>
+      </div>
+    </div>
+
+    <div class="arch-sources">
+      <div class="source-card">
+        <div class="source-name">Alchemy</div>
+        <div class="source-what">Token balances, metadata, asset transfers, JSON-RPC eth_call</div>
+        <div class="source-tag">FREE TIER · 30M CU/MO</div>
+      </div>
+      <div class="source-card">
+        <div class="source-name">DefiLlama</div>
+        <div class="source-what">USD price discovery for ERC-20 tokens via coins API</div>
+        <div class="source-tag">FREE · NO KEY REQUIRED</div>
+      </div>
+      <div class="source-card">
+        <div class="source-name">Chainalysis Oracle</div>
+        <div class="source-what">On-chain OFAC sanctions screening at 0x40C5... — live, no account</div>
+        <div class="source-tag">ON-CHAIN · NO ACCOUNT</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 7 — RISK ENGINE
+════════════════════════════════════════ -->
+<section class="slide" id="s7">
+  <div class="corner-label">RISK ENGINE</div>
+  <div class="slide-headline">5 Risk Flags.<br>Zero Subscriptions.</div>
+  <div class="slide-sub" style="margin-bottom:36px">CODED · EVIDENCED · ACTIONABLE</div>
+
+  <div class="risk-grid">
+    <div class="risk-full-card crit">
+      <div class="rfc-level">Critical</div>
+      <div class="rfc-code">R001</div>
+      <div class="rfc-desc">Native Token Concentration</div>
+      <div class="rfc-trigger">Fires when governance token &gt; 50% of total AUM. Fired on ENS DAO (79%).</div>
+    </div>
+    <div class="risk-full-card warn">
+      <div class="rfc-level">Warn</div>
+      <div class="rfc-code">R002</div>
+      <div class="rfc-desc">Low Operating Runway</div>
+      <div class="rfc-trigger">Fires when liquid runway &lt; 12 months. Critical if &lt; 6 months.</div>
+    </div>
+    <div class="risk-full-card warn">
+      <div class="rfc-level">Warn</div>
+      <div class="rfc-code">R003</div>
+      <div class="rfc-desc">Protocol Concentration</div>
+      <div class="rfc-trigger">Single DeFi protocol exposure &gt; 25% of AUM. Smart-contract risk.</div>
+    </div>
+    <div class="risk-full-card crit">
+      <div class="rfc-level">Critical</div>
+      <div class="rfc-code">R004</div>
+      <div class="rfc-desc">OFAC Counterparty</div>
+      <div class="rfc-trigger">OFAC-listed address detected in 30-day flow history. Compliance alert.</div>
+    </div>
+    <div class="risk-full-card warn">
+      <div class="rfc-level">Warn</div>
+      <div class="rfc-code">R005</div>
+      <div class="rfc-desc">Stablecoin Issuer Concentration</div>
+      <div class="rfc-trigger">Single stablecoin &gt; 50% of stable holdings. Fired on ENS (USDC 100%).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 8 — PUBLIC GOODS
+════════════════════════════════════════ -->
+<section class="slide" id="s8">
+  <div class="corner-label">PUBLIC GOODS</div>
+  <div class="goods-layout">
+    <div class="goods-left">
+      <div class="slide-headline" style="text-align:left">Built for<br>the Commons.</div>
+      <div class="slide-sub" style="text-align:left;margin-bottom:24px">NOT A PRODUCT. A PUBLIC GOOD.</div>
+      <div class="goods-para">
+        Premium treasury intelligence is gatekept behind six-figure retainers. Every tool in this stack is free. Every line of code is open. Any DAO on Earth can run this today.
+      </div>
+      <div class="goods-pills">
+        <span class="pill lit">MIT Licensed</span>
+        <span class="pill lit">DAO-Agnostic</span>
+        <span class="pill">No Subscriptions</span>
+        <span class="pill">Fork &amp; Extend</span>
+        <span class="pill">OpenClaw Native</span>
+        <span class="pill">GitHub Actions CI</span>
+      </div>
+    </div>
+    <div class="goods-grid">
+      <div class="good-card">
+        <div class="good-num">$0</div>
+        <div class="good-label">Operating Cost</div>
+        <div class="good-desc">All data sources are free. Alchemy free tier covers thousands of snapshots per month.</div>
+      </div>
+      <div class="good-card">
+        <div class="good-num">45</div>
+        <div class="good-label">Test Cases</div>
+        <div class="good-desc">Full test suite with mocked fixtures. Runs offline. CI on every push.</div>
+      </div>
+      <div class="good-card">
+        <div class="good-num">3</div>
+        <div class="good-label">Commands</div>
+        <div class="good-desc">snapshot · risks · flows. Pipe to jq. Feed to other agents. Fork and add your own.</div>
+      </div>
+      <div class="good-card">
+        <div class="good-num">1</div>
+        <div class="good-label">Env Var</div>
+        <div class="good-desc">ALCHEMY_API_KEY. That's it. No API contracts, vendor lock-in, or dashboard signup.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 9 — GET STARTED
+════════════════════════════════════════ -->
+<section class="slide" id="s9">
+  <div class="corner-label">GET STARTED</div>
+
+  <div class="s9-left">
+    <div class="s9-eyebrow">Open Source · MIT · Free Forever</div>
+    <div class="s9-title">One Env Var.<br>One Command.</div>
+    <div class="s9-sub">
+      Any DAO. Any Safe multisig. Any Ethereum EOA.<br>
+      Full treasury picture in seconds.
+    </div>
+    <a href="https://github.com/pranavpatel08/dao-treasury-sentinel" target="_blank" class="s9-link">
+      → GITHUB.COM/PRANAVPATEL08/DAO-TREASURY-SENTINEL
+    </a>
+    <div class="s9-meta">
+      <div class="meta-row"><span class="lbl">Track</span><span class="val">Allocation (分配) · Agentic Public Goods</span></div>
+      <div class="meta-row"><span class="lbl">Contact</span><span class="val">patel.pranav2@northeastern.edu</span></div>
+      <div class="meta-row"><span class="lbl">Submission</span><span class="val"><a href="https://github.com/gcc-foundation/gcc-openclaw-grants/issues/25" target="_blank">gcc-openclaw-grants #25</a></span></div>
+    </div>
+  </div>
+
+  <div class="s9-right">
+    <div class="setup-block">
+      <div class="setup-bar">
+        <span>QUICKSTART</span>
+        <span>~ 60 seconds</span>
+      </div>
+      <div class="setup-lines">
+        <div class="setup-line">
+          <span class="p">$</span>
+          <span class="c">git clone github.com/pranavpatel08/dao-treasury-sentinel</span>
+        </div>
+        <div class="setup-line">
+          <span class="p">$</span>
+          <span class="c">cd dao-treasury-sentinel &amp;&amp; uv sync</span>
+        </div>
+        <div class="setup-line">
+          <span class="p">$</span>
+          <span class="c">export ALCHEMY_API_KEY=<span style="color:var(--text-dim)">your_free_key</span></span>
+        </div>
+        <hr class="setup-sep">
+        <div class="setup-line">
+          <span class="p">$</span>
+          <span class="c">sentinel snapshot <span style="color:var(--gold-dim)">0xFe89cc7a...</span> --native ENS</span>
+        </div>
+        <hr class="setup-sep">
+        <div class="setup-line setup-out">
+          <span class="metric">  Total AUM &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="value">$76,381,675</span>
+        </div>
+        <div class="setup-line setup-out">
+          <span class="metric">  Native Concentration</span>
+          <span class="value" style="color:var(--red)">79.2%</span>
+        </div>
+        <div class="setup-line setup-out">
+          <span class="metric">  Risk Flags &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="value">2 (1 critical)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- #deck -->
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total = slides.length;
+let current = 0;
+
+const progress = document.getElementById('progress');
+const counter  = document.getElementById('counter');
+const dotsEl   = document.getElementById('dots');
+
+// Build dots
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => goTo(i));
+  dotsEl.appendChild(d);
+});
+
+function updateUI() {
+  const pct = ((current + 1) / total) * 100;
+  progress.style.width = pct + '%';
+  counter.textContent = (current + 1) + ' / ' + total;
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i === current);
+  });
+}
+
+function goTo(n) {
+  if (n === current) return;
+  const prev = current;
+  current = Math.max(0, Math.min(total - 1, n));
+  slides[prev].classList.remove('active');
+  slides[prev].classList.add('exit-left');
+  setTimeout(() => slides[prev].classList.remove('exit-left'), 500);
+  slides[current].classList.add('active');
+  updateUI();
+}
+
+document.getElementById('prev-btn').addEventListener('click', () => goTo(current - 1));
+document.getElementById('next-btn').addEventListener('click', () => goTo(current + 1));
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
+});
+
+updateUI();
+</script>
+</body>
+</html>
