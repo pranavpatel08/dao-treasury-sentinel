@@ -1,4 +1,4 @@
-from sentinel.models import TokenBalance, Holdings, Flow, Risk
+from sentinel.models import TokenBalance, Holdings, Flow
 from sentinel.risks import evaluate
 
 ENS_HEAVY = Holdings(tokens=[

@@ -8,11 +8,10 @@ import typer
 from rich.console import Console
 
 from sentinel import metrics
-from sentinel.models import Flow, Holdings, Report, Risk, Snapshot, TokenBalance
+from sentinel.models import Flow, Holdings, Report, Snapshot, TokenBalance
 from sentinel.report import render_json, render_markdown, render_terminal
 from sentinel.risks import evaluate
 from sentinel.sources.alchemy import (
-    eth_call,
     get_asset_transfers,
     get_token_balances,
     get_token_metadata,

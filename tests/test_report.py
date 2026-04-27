@@ -1,5 +1,5 @@
 import json
-from sentinel.models import TokenBalance, Holdings, Flow, Risk, Snapshot, Report
+from sentinel.models import TokenBalance, Holdings, Risk, Snapshot, Report
 from sentinel.report import render_markdown, render_json
 
 SNAP = Snapshot(

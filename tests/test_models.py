@@ -1,4 +1,4 @@
-from sentinel.models import TokenBalance, Holdings, Flow, Risk, Snapshot, Report
+from sentinel.models import TokenBalance, Holdings, Flow, Risk
 
 def test_token_balance_usd():
     tb = TokenBalance(symbol="USDC", address="0xA0b", balance=1000.0, usd_value=1000.0)
