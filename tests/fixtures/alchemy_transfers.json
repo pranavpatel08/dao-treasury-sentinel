@@ -1,0 +1,29 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "transfers": [
+      {
+        "blockNum": "0x1234567",
+        "hash": "0xabc123def456",
+        "from": "0x1234567890123456789012345678901234567890",
+        "to": "0xFe89cc7aBB2C4183683ab71653C4cdc9B02D44b7",
+        "value": "1000.0",
+        "asset": "USDC",
+        "category": "erc20",
+        "metadata": {"blockTimestamp": "2026-04-01T00:00:00Z"}
+      },
+      {
+        "blockNum": "0x1234568",
+        "hash": "0xdef456abc123",
+        "from": "0xFe89cc7aBB2C4183683ab71653C4cdc9B02D44b7",
+        "to": "0x9876543210987654321098765432109876543210",
+        "value": "500.0",
+        "asset": "ETH",
+        "category": "external",
+        "metadata": {"blockTimestamp": "2026-04-15T00:00:00Z"}
+      }
+    ],
+    "pageKey": null
+  }
+}
