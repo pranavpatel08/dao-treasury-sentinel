@@ -66,22 +66,25 @@ sentinel snapshot 0xFe89cc7aBB2C4183683ab71653C4cdc9B02D44b7 --json
 ### Example output (ENS DAO, April 2026)
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│           Treasury Snapshot: 0xFe89cc...                │
-├──────────────────────────┬──────────────────────────────┤
-│ Metric                   │ Value                        │
-├──────────────────────────┼──────────────────────────────┤
-│ Total AUM                │ $47,320,000                  │
-│ Stable Ratio             │ 8.4%                         │
-│ Native Concentration     │ 74.1%                        │
-│ Runway                   │ N/A                          │
-└──────────────────────────┴──────────────────────────────┘
-╔════════════════════════════════════════════════════════╗
-║ CRITICAL: R001_NATIVE_CONCENTRATION                    ║
-║ ENS represents 74% of treasury                        ║
-║ $47,320,000 AUM; 74% in ENS                          ║
-║ Diversify into stablecoins or ETH                     ║
-╚════════════════════════════════════════════════════════╝
+       Treasury Snapshot: 0xFe89cc7a...
+┏━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┓
+┃ Metric               ┃       Value ┃
+┡━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━┩
+│ Total AUM            │ $76,381,675 │
+│ Stable Ratio         │        6.8% │
+│ Native Concentration │       79.2% │
+│ Runway               │         N/A │
+└──────────────────────┴─────────────┘
+╭──────────────── CRITICAL: R001_NATIVE_CONCENTRATION ─────────────────╮
+│ ENS represents 79% of treasury                                       │
+│ $76,381,675 AUM; 79% in ENS                                          │
+│ Diversify into stablecoins or ETH to reduce governance-token risk    │
+╰──────────────────────────────────────────────────────────────────────╯
+╭──────────────── WARN: R005_STABLE_ISSUER_CONCENTRATION ──────────────╮
+│ USDC is 100% of stablecoin holdings                                  │
+│ $5,199,900 of $5,199,900 stablecoins in USDC                         │
+│ Diversify stablecoins across issuers (USDC + DAI + USDT)            │
+╰──────────────────────────────────────────────────────────────────────╯
 ```
 
 ### 5 Risk Flags
