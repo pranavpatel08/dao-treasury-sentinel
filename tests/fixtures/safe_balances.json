@@ -1,0 +1,41 @@
+[
+  {
+    "tokenAddress": null,
+    "token": null,
+    "balance": "7234500000000000000000",
+    "fiatBalance": "14469000.00"
+  },
+  {
+    "tokenAddress": "0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72",
+    "token": {
+      "name": "Ethereum Name Service",
+      "symbol": "ENS",
+      "decimals": 18,
+      "logoUri": "https://safe-transaction-assets.safe.global/tokens/logos/0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72.png"
+    },
+    "balance": "52000000000000000000000000",
+    "fiatBalance": "104000000.00"
+  },
+  {
+    "tokenAddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "token": {
+      "name": "USD Coin",
+      "symbol": "USDC",
+      "decimals": 6,
+      "logoUri": "https://safe-transaction-assets.safe.global/tokens/logos/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.png"
+    },
+    "balance": "5200000000000",
+    "fiatBalance": "5200000000.00"
+  },
+  {
+    "tokenAddress": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+    "token": {
+      "name": "Dai Stablecoin",
+      "symbol": "DAI",
+      "decimals": 18,
+      "logoUri": "https://safe-transaction-assets.safe.global/tokens/logos/0x6B175474E89094C44Da98b954EedeAC495271d0F.png"
+    },
+    "balance": "2750000000000000000000000",
+    "fiatBalance": "2750000.00"
+  }
+]
