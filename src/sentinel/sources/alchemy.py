@@ -28,3 +28,21 @@ async def get_asset_transfers(address: str, api_key: str, days: int = 90) -> lis
 async def eth_call(to: str, data: str, api_key: str) -> str:
     result = await _rpc("eth_call", [{"to": to, "data": data}, "latest"], api_key)
     return result or "0x"
+
+
+async def get_token_balances(address: str, api_key: str) -> list[dict]:
+    """Returns list of {contractAddress, tokenBalance (hex)} for all ERC-20 tokens."""
+    result = await _rpc("alchemy_getTokenBalances", [address, "erc20"], api_key)
+    if not result:
+        return []
+    return [
+        item for item in result.get("tokenBalances", [])
+        if item.get("tokenBalance") and item["tokenBalance"] != "0x0000000000000000000000000000000000000000000000000000000000000000"
+        and not item.get("error")
+    ]
+
+
+async def get_token_metadata(contract_address: str, api_key: str) -> dict:
+    """Returns {decimals, symbol, name, logo} for a token contract."""
+    result = await _rpc("alchemy_getTokenMetadata", [contract_address], api_key)
+    return result or {}
