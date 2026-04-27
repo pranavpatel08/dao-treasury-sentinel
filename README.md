@@ -99,12 +99,11 @@ sentinel snapshot 0xFe89cc7aBB2C4183683ab71653C4cdc9B02D44b7 --json
 
 ---
 
-## Repo
+## Pitch Deck
 
-https://github.com/pranavpatel08/dao-treasury-sentinel
+https://pranavpatel08.github.io/dao-treasury-sentinel/
 
 ---
-
 
 ## Public Goods Statement
 
@@ -139,7 +138,7 @@ https://github.com/pranavpatel08/dao-treasury-sentinel
 
 ## Contact
 
-**Email:** patel.pranav2@northeastern.edu
+**Email:** pranavjpatel.08@gmail.com
 
 **Payout address (Ethereum mainnet):** `0x950739a11ba0820ceEfFFEC4682ec352058deE2d`
 
