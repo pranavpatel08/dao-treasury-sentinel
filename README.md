@@ -141,7 +141,7 @@ https://github.com/pranavpatel08/dao-treasury-sentinel
 
 **Email:** patel.pranav2@northeastern.edu
 
-**Payout address (Ethereum mainnet):** *(add your ETH address here)*
+**Payout address (Ethereum mainnet):** `0x950739a11ba0820ceEfFFEC4682ec352058deE2d`
 
 ---
 
