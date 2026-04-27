@@ -98,15 +98,10 @@ sentinel snapshot 0xFe89cc7aBB2C4183683ab71653C4cdc9B02D44b7 --json
 
 ## Repo
 
-https://github.com/pranavpatel/dao-treasury-sentinel
+https://github.com/pranavpatel08/dao-treasury-sentinel
 
 ---
 
-## Demo Video
-
-*(60-second demo to be recorded — link will be added before submission deadline)*
-
----
 
 ## Public Goods Statement
 
@@ -151,7 +146,7 @@ https://github.com/pranavpatel/dao-treasury-sentinel
 
 ```bash
 # Install (requires uv)
-git clone https://github.com/pranavpatel/dao-treasury-sentinel
+git clone https://github.com/pranavpatel08/dao-treasury-sentinel
 cd dao-treasury-sentinel
 uv sync
 

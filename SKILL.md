@@ -1,7 +1,7 @@
 ---
 name: dao_treasury_sentinel
 description: Always-on DAO treasury analyst. Snapshots holdings, computes runway, flags concentration risk and OFAC counterparties for any Safe multisig or EOA on Ethereum.
-metadata: { "openclaw": { "requires": { "bins": ["uv"], "env": ["ALCHEMY_API_KEY"] }, "homepage": "https://github.com/pranavpatel/dao-treasury-sentinel" } }
+metadata: { "openclaw": { "requires": { "bins": ["uv"], "env": ["ALCHEMY_API_KEY"] }, "homepage": "https://github.com/pranavpatel08/dao-treasury-sentinel" } }
 ---
 
 ## When to invoke this skill

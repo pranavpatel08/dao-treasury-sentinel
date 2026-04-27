@@ -2,31 +2,57 @@
   "snapshot": {
     "address": "0xFe89cc7aBB2C4183683ab71653C4cdc9B02D44b7",
     "chain": "ethereum",
-    "timestamp": "2026-04-26T17:00:00+00:00",
+    "timestamp": "2026-04-27T01:07:56.271338+00:00",
     "holdings": {
       "safe_address": "0xFe89cc7aBB2C4183683ab71653C4cdc9B02D44b7",
-      "total_usd": 47320000.0,
       "tokens": [
-        {"symbol": "ENS", "address": "0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72", "balance": 30000000.0, "usd_value": 35082000.0, "is_stablecoin": false, "is_native_token": true, "protocol": null},
-        {"symbol": "ETH", "address": "0x0000000000000000000000000000000000000000", "balance": 2100.0, "usd_value": 7980000.0, "is_stablecoin": false, "is_native_token": false, "protocol": null},
-        {"symbol": "USDC", "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "balance": 2500000.0, "usd_value": 2500000.0, "is_stablecoin": true, "is_native_token": false, "protocol": null},
-        {"symbol": "DAI", "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F", "balance": 1250000.0, "usd_value": 1250000.0, "is_stablecoin": true, "is_native_token": false, "protocol": null},
-        {"symbol": "WETH", "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "balance": 134.0, "usd_value": 508000.0, "is_stablecoin": false, "is_native_token": false, "protocol": null}
+        {
+          "symbol": "ETH",
+          "address": "0x0000000000000000000000000000000000000000",
+          "balance": 4466.589676552284,
+          "usd_value": 10658104.605599472,
+          "is_stablecoin": false,
+          "is_native_token": false,
+          "protocol": null
+        },
+        {
+          "symbol": "SYND",
+          "address": "0x1bab804803159ad84b8854581aa53ac72455614e",
+          "balance": 200000.0,
+          "usd_value": 7022.025304039096,
+          "is_stablecoin": false,
+          "is_native_token": false,
+          "protocol": null
+        },
+        {
+          "symbol": "USDC",
+          "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "balance": 5200172.814407,
+          "usd_value": 5199899.931093132,
+          "is_stablecoin": true,
+          "is_native_token": false,
+          "protocol": null
+        },
+        {
+          "symbol": "ENS",
+          "address": "0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
+          "balance": 9701035.59664602,
+          "usd_value": 60516648.56010518,
+          "is_stablecoin": false,
+          "is_native_token": true,
+          "protocol": null
+        }
       ],
-      "flows_30d": [],
-      "risks": [
-        {"code": "R001_NATIVE_CONCENTRATION", "level": "critical", "description": "ENS represents 74% of treasury", "evidence": "$47,320,000 AUM; 74% in ENS", "recommendation": "Diversify into stablecoins or ETH to reduce governance-token tail risk"},
-        {"code": "R005_STABLE_ISSUER_CONCENTRATION", "level": "warn", "description": "USDC is 67% of stablecoin holdings", "evidence": "$2,500,000 of $3,750,000 stablecoins in USDC", "recommendation": "Diversify stablecoins across issuers (USDC + DAI + USDT)"}
-      ]
+      "total_usd": 76381675.12210183
     },
     "flows_30d": [],
     "risks": []
   },
   "metrics": {
-    "total_aum": 47320000.0,
-    "stable_ratio": 0.0793,
-    "native_concentration": 0.741,
-    "eth_class": 0.18,
-    "non_native_treasury": 12238000.0
+    "total_aum": 76381675.12210183,
+    "stable_ratio": 0.06807784619518625,
+    "native_concentration": 0.7922927647680519,
+    "eth_class": 0.1395374556601658,
+    "non_native_treasury": 15865026.561996644
   }
 }
